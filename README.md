@@ -13,6 +13,14 @@ pnpm dev
 
 Copy `.env.example` to `.env.local` and fill in your Supabase credentials. For the admin demo mode the `NEXT_PUBLIC_ADMIN_CODE` defaults to `0000`.
 
+### Binary asset policy
+
+This repository blocks binary assets (for example PNG, JPG, GIF, ICO, font, and media files) to keep PRs text-only. Before opening a pull request, run the guard script to ensure no binary files are tracked:
+
+```bash
+pnpm check:binaries
+```
+
 ### Seed data
 
 A placeholder script lives at `scripts/seed.ts`. You can run it after configuring Supabase RPC `seed_demo_data`:
