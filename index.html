@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShareRead – Static Preview</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: radial-gradient(circle at 15% 20%, rgba(120, 120, 255, 0.1), transparent 38%),
+          radial-gradient(circle at 80% 0%, rgba(16, 185, 129, 0.12), transparent 36%),
+          linear-gradient(135deg, rgba(12, 17, 29, 0.95), rgba(8, 8, 16, 0.9));
+        --card: rgba(255, 255, 255, 0.07);
+        --surface: rgba(255, 255, 255, 0.1);
+        --border: rgba(255, 255, 255, 0.2);
+        --text: #e2e8f0;
+        --muted: #a5b4fc;
+        --accent: #8b5cf6;
+        --accent-2: #10b981;
+        --shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+        --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --font-dyslexic: "Atkinson Hyperlegible", "Inter", system-ui, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: var(--font-body);
+        background: var(--bg);
+        color: var(--text);
+        display: flex;
+        justify-content: center;
+        padding: 32px;
+      }
+
+      body.dyslexic {
+        font-family: var(--font-dyslexic);
+      }
+
+      body.relaxed {
+        line-height: 1.8;
+        letter-spacing: 0.01em;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .shell {
+        width: min(1200px, 100%);
+        border-radius: 30px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(14px) saturate(140%);
+        padding: 32px;
+      }
+
+      header {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      .badge {
+        padding: 6px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+        font-size: 14px;
+        letter-spacing: 0.02em;
+      }
+
+      h1 {
+        margin: 6px 0;
+        font-size: clamp(28px, 4vw, 38px);
+        letter-spacing: -0.01em;
+      }
+
+      p {
+        margin: 0;
+        color: #cbd5e1;
+        line-height: 1.6;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      nav a {
+        text-decoration: none;
+        padding: 10px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.06);
+        font-weight: 600;
+        transition: transform 120ms ease, box-shadow 120ms ease;
+      }
+
+      nav a:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      }
+
+      .sections {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
+        margin: 24px 0 32px;
+      }
+
+      .card {
+        padding: 18px;
+        border-radius: 18px;
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+        border: 1px solid var(--border);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.28);
+      }
+
+      .card h3 {
+        margin: 0 0 8px;
+        font-size: 18px;
+      }
+
+      .card small {
+        color: #94a3b8;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 18px 0 8px;
+      }
+
+      .button {
+        text-decoration: none;
+        padding: 12px 16px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, var(--accent), #6366f1);
+        color: white;
+        font-weight: 600;
+        box-shadow: 0 12px 35px rgba(99, 102, 241, 0.35);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .secondary {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text);
+        border: 1px solid var(--border);
+        box-shadow: none;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.05);
+        font-size: 13px;
+      }
+
+      ul {
+        padding-left: 18px;
+        margin: 8px 0 0;
+        color: #cbd5e1;
+        line-height: 1.6;
+      }
+
+      .panel {
+        border-radius: 18px;
+        padding: 20px;
+        border: 1px solid var(--border);
+        background: rgba(0, 0, 0, 0.2);
+      }
+
+      .panel h2 {
+        margin-top: 0;
+        margin-bottom: 8px;
+      }
+
+      .grid-wide {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 14px;
+        margin-top: 14px;
+      }
+
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 6px;
+      }
+
+      .book-card {
+        padding: 14px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .tabs {
+        display: inline-flex;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .tabs button {
+        background: transparent;
+        border: none;
+        padding: 10px 14px;
+        color: var(--text);
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .tabs button.active {
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .leaderboard {
+        display: grid;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .toggle-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .footer {
+        margin-top: 24px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        font-size: 14px;
+        color: #94a3b8;
+      }
+
+      @media (max-width: 640px) {
+        body {
+          padding: 16px;
+        }
+
+        nav {
+          gap: 6px;
+        }
+
+        nav a {
+          padding: 8px 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <header>
+        <div>
+          <div class="badge">ShareRead · Static Experience</div>
+          <h1>Explore the full ShareRead demo without running the dev server.</h1>
+          <p>
+            This HTML mirrors the core ShareRead pages—discover, reader, library, writers, admin,
+            donations, AI helpers, and accessibility controls—so you can click around instantly.
+          </p>
+        </div>
+        <nav aria-label="Jump to sections">
+          <a href="#discover">Discover</a>
+          <a href="#reader">Reader</a>
+          <a href="#library">Library</a>
+          <a href="#writers">Writers</a>
+          <a href="#admin">Admin</a>
+          <a href="#donate">Donate</a>
+          <a href="#ai">AI tools</a>
+        </nav>
+      </header>
+
+      <section class="sections" aria-label="Feature highlights">
+        <article class="card">
+          <h3>Home & Discover</h3>
+          <p>AI-tailored feed, spotlight hero, and global search with tag chips.</p>
+          <small>Route: /</small>
+        </article>
+        <article class="card">
+          <h3>Reader</h3>
+          <p>Glassmorphic reader with progress, highlights, and quizzes.</p>
+          <small>Route: /reader/journey-of-light</small>
+        </article>
+        <article class="card">
+          <h3>Writers Hub</h3>
+          <p>Submit manuscripts, track approvals, and request access as guests.</p>
+          <small>Route: /writers</small>
+        </article>
+        <article class="card">
+          <h3>Admin Dashboard</h3>
+          <p>Manage books, users, submissions, and binary-free policy checks.</p>
+          <small>Route: /admin</small>
+        </article>
+      </section>
+
+      <section class="panel" id="discover" aria-labelledby="discover-title">
+        <h2 id="discover-title">Discover feed</h2>
+        <p>Tap a tag to filter recommendations. Hover to see the “Why this book?” reason.</p>
+        <div class="tag-row" id="tag-row"></div>
+        <div class="grid-wide" id="discover-grid"></div>
+      </section>
+
+      <section class="panel" id="reader" aria-labelledby="reader-title">
+        <h2 id="reader-title">Reader preview</h2>
+        <div class="toggle-row" role="group" aria-label="Reader preferences">
+          <span class="pill">Theme</span>
+          <div class="tabs" aria-label="Theme selector">
+            <button data-theme="dark" class="active">Dark</button>
+            <button data-theme="light">Light</button>
+            <button data-theme="green">Green/Eco</button>
+            <button data-theme="pro">Professional</button>
+          </div>
+          <button class="pill" id="dyslexic-toggle">Dyslexic-friendly font</button>
+          <button class="pill" id="spacing-toggle">Relaxed spacing</button>
+        </div>
+        <div class="grid-wide" style="margin-top: 16px;">
+          <article class="book-card">
+            <header style="display: flex; justify-content: space-between; gap: 8px; align-items: center;">
+              <div>
+                <div style="font-weight: 700;">Journey of Light</div>
+                <small>Glass reader · Progress 42%</small>
+              </div>
+              <span class="pill">Premium-ready</span>
+            </header>
+            <p>
+              Navigate chapters, adjust fonts, highlight text, and launch AI quizzes without leaving the
+              page.
+            </p>
+            <div class="actions">
+              <a class="button" href="http://localhost:3000/reader/journey-of-light" target="_blank" rel="noreferrer">Open live reader</a>
+              <a class="button secondary" href="#library">See my books</a>
+            </div>
+            <div class="tag-row">
+              <span class="pill">TTS</span>
+              <span class="pill">Notes</span>
+              <span class="pill">Offline cache</span>
+              <span class="pill">Quizzes</span>
+            </div>
+          </article>
+          <article class="book-card">
+            <header style="display: flex; justify-content: space-between; gap: 8px; align-items: center;">
+              <div>
+                <div style="font-weight: 700;">Adaptive surfaces</div>
+                <small>Wallpaper-aware themes</small>
+              </div>
+              <span class="pill">Auto-tint</span>
+            </header>
+            <p>
+              Themes react to uploaded wallpaper. Try the quick toggles above to see the preview change
+              instantly.
+            </p>
+            <div class="tag-row">
+              <span class="pill">Dark</span>
+              <span class="pill">Light</span>
+              <span class="pill">Pro</span>
+              <span class="pill">Cute</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" id="library" aria-labelledby="library-title">
+        <h2 id="library-title">Library & progress</h2>
+        <div class="tabs" aria-label="Library tabs" id="library-tabs"></div>
+        <div class="grid-wide" id="library-grid"></div>
+        <p style="margin-top: 10px;">Track purchases, borrowed titles, highlights, and completion rates.</p>
+      </section>
+
+      <section class="panel" id="writers" aria-labelledby="writers-title">
+        <h2 id="writers-title">Writers hub</h2>
+        <div class="grid-wide">
+          <article class="book-card">
+            <h3>Submissions</h3>
+            <p>Upload manuscripts with metadata and files, then monitor reviews and approvals.</p>
+            <div class="tag-row">
+              <span class="pill">Status: Pending</span>
+              <span class="pill">AI Moderator</span>
+              <span class="pill">Feedback</span>
+            </div>
+            <div class="actions">
+              <a class="button secondary" href="http://localhost:3000/writers" target="_blank" rel="noreferrer">Open writers space</a>
+              <a class="button" href="#admin">See admin review</a>
+            </div>
+          </article>
+          <article class="book-card">
+            <h3>Guest access</h3>
+            <p>Guests can request writer access. Admins approve to unlock submissions.</p>
+            <div class="tag-row">
+              <span class="pill">Demo code 0000</span>
+              <span class="pill">Role elevation</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" id="admin" aria-labelledby="admin-title">
+        <h2 id="admin-title">Admin dashboard</h2>
+        <p>Manage inventory, roles, submissions, and AI issue reports.</p>
+        <div class="grid-wide">
+          <article class="book-card">
+            <h3>Books & inventory</h3>
+            <p>Edit prices, set availability, and upload sections/chapters.</p>
+            <div class="tag-row">
+              <span class="pill">Price</span>
+              <span class="pill">Inventory</span>
+              <span class="pill">Tags</span>
+            </div>
+          </article>
+          <article class="book-card">
+            <h3>Profiles & roles</h3>
+            <p>Promote readers to writers/admins with server-side checks.</p>
+            <div class="tag-row">
+              <span class="pill">RLS aware</span>
+              <span class="pill">Elevate</span>
+              <span class="pill">Revoke</span>
+            </div>
+          </article>
+          <article class="book-card">
+            <h3>Submissions queue</h3>
+            <p>Approve/reject with feedback and surface AI Moderator issues.</p>
+            <div class="tag-row">
+              <span class="pill">Needs changes</span>
+              <span class="pill">Approved</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" id="donate" aria-labelledby="donate-title">
+        <h2 id="donate-title">Donations & achievements</h2>
+        <p>Connect to ShareKind, celebrate top donors, and trigger confetti for badges.</p>
+        <div class="leaderboard" id="donor-board"></div>
+        <div class="actions" style="margin-top: 12px;">
+          <a class="button" href="https://sharekind-lyart.vercel.app/" target="_blank" rel="noreferrer">Donate via ShareKind</a>
+          <a class="button secondary" href="#home">Back to top</a>
+        </div>
+      </section>
+
+      <section class="panel" id="ai" aria-labelledby="ai-title">
+        <h2 id="ai-title">AI utilities</h2>
+        <div class="grid-wide">
+          <article class="book-card">
+            <h3>Preferences concierge</h3>
+            <p>Asks for genres/topics/language, saves filters, and applies them to the feed.</p>
+            <div class="tag-row">
+              <span class="pill">Survey</span>
+              <span class="pill">Personalization</span>
+            </div>
+          </article>
+          <article class="book-card">
+            <h3>Quiz generator</h3>
+            <p>Per-chapter quizzes for public-domain books with instant scoring.</p>
+            <div class="tag-row">
+              <span class="pill">Public domain</span>
+              <span class="pill">Multiple choice</span>
+            </div>
+          </article>
+          <article class="book-card">
+            <h3>Moderator</h3>
+            <p>Flags missing metadata, broken links, low contrast, and slow images.</p>
+            <div class="tag-row">
+              <span class="pill">Issues list</span>
+              <span class="pill">Recommendations</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="card" aria-label="Local run instructions" style="margin-top: 18px;">
+        <h3>Run the full Next.js app</h3>
+        <p>When you want the live routing, start the dev server:</p>
+        <ul>
+          <li><code>pnpm install</code></li>
+          <li><code>pnpm dev</code></li>
+          <li>Open <code>http://localhost:3000</code></li>
+          <li>Binary guard: <code>pnpm check:binaries</code></li>
+        </ul>
+      </section>
+
+      <div class="footer" aria-label="Notes">
+        <span>All assets remain text-based (SVG icons); binary files are blocked in PRs.</span>
+        <span>Admin demo code: 0000</span>
+        <span>Supports light/dark/cute/green/pro themes, dyslexic-friendly font, and relaxed spacing.</span>
+      </div>
+    </main>
+
+    <script>
+      const discover = [
+        {
+          title: "Journey of Light",
+          reason: "Matches your sci-fi + hopeful endings preferences",
+          tags: ["Sci-fi", "Hopepunk", "Premium preview"],
+          length: "12 chapters",
+        },
+        {
+          title: "Green Atlas",
+          reason: "Eco-theme aligns with your sustainability tag",
+          tags: ["Eco", "Non-fiction", "Public domain"],
+          length: "9 chapters",
+        },
+        {
+          title: "Quiet Summers",
+          reason: "Short-form literary pick for weekend reading",
+          tags: ["Literary", "Short", "Borrow"],
+          length: "6 chapters",
+        },
+      ];
+
+      const tags = Array.from(new Set(discover.flatMap((item) => item.tags)));
+      const tagRow = document.getElementById("tag-row");
+      const discoverGrid = document.getElementById("discover-grid");
+      let activeTag = null;
+
+      function renderDiscover() {
+        discoverGrid.innerHTML = "";
+        discover
+          .filter((item) => !activeTag || item.tags.includes(activeTag))
+          .forEach((item) => {
+            const card = document.createElement("article");
+            card.className = "book-card";
+            card.innerHTML = `
+              <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;">
+                <div>
+                  <div style="font-weight:700;">${item.title}</div>
+                  <small>${item.length}</small>
+                </div>
+                <span class="pill" title="Why this book?">${item.reason}</span>
+              </div>
+              <div class="tag-row">${item.tags.map((tag) => `<span class=\"pill\">${tag}</span>`).join("")}</div>
+            `;
+            discoverGrid.appendChild(card);
+          });
+      }
+
+      tags.forEach((tag) => {
+        const btn = document.createElement("button");
+        btn.className = "pill";
+        btn.textContent = tag;
+        btn.addEventListener("click", () => {
+          activeTag = activeTag === tag ? null : tag;
+          renderDiscover();
+          Array.from(tagRow.children).forEach((child) => child.classList.remove("active"));
+          if (activeTag) btn.classList.add("active");
+        });
+        tagRow.appendChild(btn);
+      });
+
+      renderDiscover();
+
+      const library = {
+        Purchased: [
+          { title: "Journey of Light", progress: "42%", status: "In progress" },
+          { title: "Quiet Summers", progress: "Done", status: "Completed" },
+        ],
+        Borrowed: [
+          { title: "Green Atlas", progress: "18%", status: "Due in 5d" },
+        ],
+        Highlights: [
+          { title: "Journey of Light", progress: "Chapter 3", status: "5 highlights" },
+        ],
+      };
+
+      const libraryTabs = document.getElementById("library-tabs");
+      const libraryGrid = document.getElementById("library-grid");
+      const tabNames = Object.keys(library);
+      let activeLibraryTab = tabNames[0];
+
+      function renderLibrary() {
+        libraryGrid.innerHTML = "";
+        library[activeLibraryTab].forEach((item) => {
+          const card = document.createElement("article");
+          card.className = "book-card";
+          card.innerHTML = `
+            <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;">
+              <div>
+                <div style="font-weight:700;">${item.title}</div>
+                <small>${item.progress}</small>
+              </div>
+              <span class="pill">${item.status}</span>
+            </div>
+          `;
+          libraryGrid.appendChild(card);
+        });
+      }
+
+      tabNames.forEach((tab, idx) => {
+        const btn = document.createElement("button");
+        btn.textContent = tab;
+        btn.className = idx === 0 ? "active" : "";
+        btn.addEventListener("click", () => {
+          activeLibraryTab = tab;
+          Array.from(libraryTabs.children).forEach((child) => child.classList.remove("active"));
+          btn.classList.add("active");
+          renderLibrary();
+        });
+        libraryTabs.appendChild(btn);
+      });
+
+      renderLibrary();
+
+      const donors = [
+        { name: "Avery", amount: "$120", badge: "Platinum" },
+        { name: "Jordan", amount: "$85", badge: "Gold" },
+        { name: "Riley", amount: "$55", badge: "Silver" },
+      ];
+
+      const donorBoard = document.getElementById("donor-board");
+      donors.forEach((donor) => {
+        const row = document.createElement("div");
+        row.className = "row";
+        row.innerHTML = `
+          <span><strong>${donor.name}</strong> — ${donor.badge}</span>
+          <span>${donor.amount}</span>
+        `;
+        donorBoard.appendChild(row);
+      });
+
+      const themeButtons = document.querySelectorAll("[data-theme]");
+      themeButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          themeButtons.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          const theme = btn.dataset.theme;
+          switch (theme) {
+            case "light":
+              document.documentElement.style.setProperty("--bg", "linear-gradient(135deg, #f8fafc, #e2e8f0)");
+              document.documentElement.style.setProperty("--text", "#0f172a");
+              document.documentElement.style.setProperty("--border", "rgba(0,0,0,0.08)");
+              break;
+            case "green":
+              document.documentElement.style.setProperty(
+                "--bg",
+                "radial-gradient(circle at 10% 10%, rgba(74, 222, 128, 0.15), transparent 38%), linear-gradient(140deg, #0f172a, #0b2620)"
+              );
+              document.documentElement.style.setProperty("--text", "#e8ffef");
+              document.documentElement.style.setProperty("--border", "rgba(255,255,255,0.2)");
+              break;
+            case "pro":
+              document.documentElement.style.setProperty("--bg", "linear-gradient(135deg, #0b1220, #0f172a)");
+              document.documentElement.style.setProperty("--text", "#e2e8f0");
+              document.documentElement.style.setProperty("--border", "rgba(255,255,255,0.16)");
+              break;
+            default:
+              document.documentElement.style.setProperty(
+                "--bg",
+                "radial-gradient(circle at 15% 20%, rgba(120, 120, 255, 0.1), transparent 38%), radial-gradient(circle at 80% 0%, rgba(16, 185, 129, 0.12), transparent 36%), linear-gradient(135deg, rgba(12, 17, 29, 0.95), rgba(8, 8, 16, 0.9))"
+              );
+              document.documentElement.style.setProperty("--text", "#e2e8f0");
+              document.documentElement.style.setProperty("--border", "rgba(255,255,255,0.2)");
+          }
+        });
+      });
+
+      const dyslexicToggle = document.getElementById("dyslexic-toggle");
+      dyslexicToggle.addEventListener("click", () => {
+        document.body.classList.toggle("dyslexic");
+        dyslexicToggle.textContent = document.body.classList.contains("dyslexic")
+          ? "Dyslexic font on"
+          : "Dyslexic-friendly font";
+      });
+
+      const spacingToggle = document.getElementById("spacing-toggle");
+      spacingToggle.addEventListener("click", () => {
+        document.body.classList.toggle("relaxed");
+        spacingToggle.textContent = document.body.classList.contains("relaxed")
+          ? "Relaxed spacing on"
+          : "Relaxed spacing";
+      });
+    </script>
+  </body>
+</html>

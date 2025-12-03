@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+dark {
+  color-scheme: dark;
+}
+
+body {
+  min-height: 100vh;
+  font-feature-settings: "rlig" 1, "calt" 1;
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3)),
+    linear-gradient(135deg, rgba(62, 121, 247, 0.2), rgba(129, 230, 217, 0.15));
+}
+
+.glass-panel {
+  @apply rounded-3xl border border-white/20 bg-glass shadow-glass backdrop-blur-xl;
+}
+
+.wallpaper-overlay {
+  @apply absolute inset-0 -z-10 bg-cover bg-center opacity-40;
+}
+
+:root[data-font="dyslexic"] {
+  font-family: theme("fontFamily.dyslexic");
+}
+
+.reader-controls button {
+  @apply hocus:scale-[1.02] transition-transform;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100/40;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-400/60 rounded-full;
+}

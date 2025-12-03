@@ -1,0 +1,20 @@
+# dependencies
+/node_modules
+/.pnpm-store
+
+# production
+/.next
+/out
+
+# misc
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# vscode
+.vscode
+
+# playwright
+/playwright-report
+/test-results
